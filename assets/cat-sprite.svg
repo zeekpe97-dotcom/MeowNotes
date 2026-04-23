@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 160" class="cat-svg">
+  <defs>
+    <linearGradient id="catBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB067"/>
+      <stop offset="100%" style="stop-color:#F5983D"/>
+    </linearGradient>
+    <linearGradient id="catBellyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFECD2"/>
+      <stop offset="100%" style="stop-color:#FFD4A8"/>
+    </linearGradient>
+    <linearGradient id="catEarInner" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFB5B5"/>
+      <stop offset="100%" style="stop-color:#FFC5C5"/>
+    </linearGradient>
+  </defs>
+
+  <g class="cat-body-group">
+    <!-- Shadow -->
+    <ellipse cx="90" cy="148" rx="40" ry="6" fill="rgba(0,0,0,0.06)"/>
+
+    <!-- Tail -->
+    <g class="cat-tail">
+      <path d="M130 105 C145 95, 160 80, 155 65 C152 55, 140 55, 138 65" 
+            fill="none" stroke="#F5983D" stroke-width="8" stroke-linecap="round"/>
+      <path d="M155 65 C152 55, 140 55, 138 65" 
+            fill="none" stroke="#E88A30" stroke-width="8" stroke-linecap="round"/>
+    </g>
+
+    <!-- Body -->
+    <ellipse cx="90" cy="110" rx="42" ry="35" fill="url(#catBodyGrad)"/>
+
+    <!-- Belly -->
+    <ellipse cx="90" cy="118" rx="26" ry="22" fill="url(#catBellyGrad)"/>
+
+    <!-- Front paws -->
+    <g class="cat-paws">
+      <ellipse cx="68" cy="138" rx="10" ry="7" fill="#FFB067"/>
+      <ellipse cx="112" cy="138" rx="10" ry="7" fill="#FFB067"/>
+      <!-- Paw pads -->
+      <ellipse cx="68" cy="139" rx="5" ry="3.5" fill="#FFECD2"/>
+      <ellipse cx="112" cy="139" rx="5" ry="3.5" fill="#FFECD2"/>
+    </g>
+
+    <!-- Head -->
+    <g class="cat-head">
+      <!-- Head shape -->
+      <ellipse cx="90" cy="65" rx="35" ry="30" fill="url(#catBodyGrad)"/>
+
+      <!-- Left ear -->
+      <path d="M62 48 L55 20 L78 40 Z" fill="#FFB067"/>
+      <path d="M65 45 L60 26 L75 40 Z" fill="url(#catEarInner)"/>
+
+      <!-- Right ear -->
+      <path d="M118 48 L125 20 L102 40 Z" fill="#FFB067"/>
+      <path d="M115 45 L120 26 L105 40 Z" fill="url(#catEarInner)"/>
+
+      <!-- Face mask (lighter) -->
+      <ellipse cx="90" cy="70" rx="22" ry="18" fill="#FFECD2" opacity="0.4"/>
+
+      <!-- Eyes (open state) -->
+      <g class="cat-eyes">
+        <g class="cat-eye-open">
+          <!-- Left eye -->
+          <ellipse cx="78" cy="62" rx="6" ry="6.5" fill="#2D3748"/>
+          <ellipse cx="78" cy="62" rx="5" ry="5.5" fill="#3D4F6A"/>
+          <circle cx="80" cy="60" r="2" fill="white" opacity="0.8"/>
+          <circle cx="76" cy="64" r="1" fill="white" opacity="0.4"/>
+
+          <!-- Right eye -->
+          <ellipse cx="102" cy="62" rx="6" ry="6.5" fill="#2D3748"/>
+          <ellipse cx="102" cy="62" rx="5" ry="5.5" fill="#3D4F6A"/>
+          <circle cx="104" cy="60" r="2" fill="white" opacity="0.8"/>
+          <circle cx="100" cy="64" r="1" fill="white" opacity="0.4"/>
+        </g>
+
+        <!-- Eyes (closed state - sleep) -->
+        <g class="cat-eye-closed">
+          <path d="M72 63 Q78 58 84 63" fill="none" stroke="#2D3748" stroke-width="2" stroke-linecap="round"/>
+          <path d="M96 63 Q102 58 108 63" fill="none" stroke="#2D3748" stroke-width="2" stroke-linecap="round"/>
+        </g>
+      </g>
+
+      <!-- Nose -->
+      <path d="M88 72 L90 74 L92 72" fill="#FF9B9B" stroke="none"/>
+      <ellipse cx="90" cy="72" rx="2.5" ry="2" fill="#FF9B9B"/>
+
+      <!-- Mouth -->
+      <path d="M90 74 Q90 77 86 78" fill="none" stroke="#E88A72" stroke-width="1" stroke-linecap="round"/>
+      <path d="M90 74 Q90 77 94 78" fill="none" stroke="#E88A72" stroke-width="1" stroke-linecap="round"/>
+
+      <!-- Whiskers -->
+      <g class="cat-whiskers">
+        <!-- Left whiskers -->
+        <line x1="70" y1="70" x2="45" y2="65" stroke="#D4A57A" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+        <line x1="70" y1="73" x2="44" y2="73" stroke="#D4A57A" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+        <line x1="70" y1="76" x2="45" y2="81" stroke="#D4A57A" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+
+        <!-- Right whiskers -->
+        <line x1="110" y1="70" x2="135" y2="65" stroke="#D4A57A" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+        <line x1="110" y1="73" x2="136" y2="73" stroke="#D4A57A" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+        <line x1="110" y1="76" x2="135" y2="81" stroke="#D4A57A" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+      </g>
+
+      <!-- Forehead stripes (tabby markings) -->
+      <path d="M82 50 Q90 46 98 50" fill="none" stroke="#E89A40" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+      <path d="M85 47 Q90 44 95 47" fill="none" stroke="#E89A40" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+    </g>
+
+    <!-- Zzz for sleep mode -->
+    <g class="cat-zzz">
+      <text class="zzz-1" x="125" y="45" fill="#FFB067" font-size="10" font-weight="bold">z</text>
+      <text class="zzz-2" x="132" y="35" fill="#FFB067" font-size="12" font-weight="bold">Z</text>
+      <text class="zzz-3" x="138" y="28" fill="#FFB067" font-size="8" font-weight="bold">z</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+# Generated images (keep originals in assets/)
+vibe_images/
+
+# Screenshots
+*.png
+!assets/*.png
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.qoder/
+*.swp
+*.swo
+*~
+
+# Node modules (future)
+node_modules/

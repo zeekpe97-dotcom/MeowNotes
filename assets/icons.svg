@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- Home / Notes -->
+  <symbol id="icon-home" viewBox="0 0 24 24">
+    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+    <polyline points="9 21 9 14 15 14 15 21"/>
+  </symbol>
+
+  <!-- Search -->
+  <symbol id="icon-search" viewBox="0 0 24 24">
+    <circle cx="11" cy="11" r="7"/>
+    <line x1="16.5" y1="16.5" x2="21" y2="21"/>
+  </symbol>
+
+  <!-- Graph / Network -->
+  <symbol id="icon-graph" viewBox="0 0 24 24">
+    <circle cx="6" cy="6" r="2.5"/>
+    <circle cx="18" cy="8" r="2.5"/>
+    <circle cx="8" cy="18" r="2.5"/>
+    <circle cx="18" cy="18" r="2.5"/>
+    <line x1="8.2" y1="7.2" x2="15.8" y2="7.2"/>
+    <line x1="7" y1="8.3" x2="7.5" y2="15.7"/>
+    <line x1="10" y1="17" x2="15.5" y2="17.5"/>
+    <line x1="16.5" y1="10.2" x2="10" y2="16.5"/>
+  </symbol>
+
+  <!-- Bookmark -->
+  <symbol id="icon-bookmark" viewBox="0 0 24 24">
+    <path d="M5 3h14a1 1 0 011 1v16.5a.5.5 0 01-.78.42L12 16l-7.22 4.92A.5.5 0 014 20.5V4a1 1 0 011-1z"/>
+  </symbol>
+
+  <!-- Tag -->
+  <symbol id="icon-tag" viewBox="0 0 24 24">
+    <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+    <circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/>
+  </symbol>
+
+  <!-- Settings -->
+  <symbol id="icon-settings" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+  </symbol>
+
+  <!-- Plus -->
+  <symbol id="icon-plus" viewBox="0 0 24 24">
+    <line x1="12" y1="5" x2="12" y2="19"/>
+    <line x1="5" y1="12" x2="19" y2="12"/>
+  </symbol>
+
+  <!-- File / Document -->
+  <symbol id="icon-file" viewBox="0 0 24 24">
+    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+    <polyline points="14 2 14 8 20 8"/>
+  </symbol>
+
+  <!-- Folder -->
+  <symbol id="icon-folder" viewBox="0 0 24 24">
+    <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+  </symbol>
+
+  <!-- Chevron Right -->
+  <symbol id="icon-chevron" viewBox="0 0 24 24">
+    <polyline points="9 18 15 12 9 6"/>
+  </symbol>
+
+  <!-- Link -->
+  <symbol id="icon-link" viewBox="0 0 24 24">
+    <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+    <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+  </symbol>
+
+  <!-- Send (arrow right) -->
+  <symbol id="icon-send" viewBox="0 0 24 24">
+    <line x1="5" y1="12" x2="19" y2="12"/>
+    <polyline points="13 6 19 12 13 18"/>
+  </symbol>
+
+  <!-- Close / X -->
+  <symbol id="icon-close" viewBox="0 0 24 24">
+    <line x1="18" y1="6" x2="6" y2="18"/>
+    <line x1="6" y1="6" x2="18" y2="18"/>
+  </symbol>
+
+  <!-- Code -->
+  <symbol id="icon-code" viewBox="0 0 24 24">
+    <polyline points="16 18 22 12 16 6"/>
+    <polyline points="8 6 2 12 8 18"/>
+  </symbol>
+
+  <!-- Cat Paw (Logo) -->
+  <symbol id="icon-paw" viewBox="0 0 24 24">
+    <ellipse cx="8" cy="8" rx="2" ry="2.5" fill="currentColor" stroke="none"/>
+    <ellipse cx="16" cy="8" rx="2" ry="2.5" fill="currentColor" stroke="none"/>
+    <ellipse cx="5" cy="13" rx="1.8" ry="2.2" fill="currentColor" stroke="none"/>
+    <ellipse cx="19" cy="13" rx="1.8" ry="2.2" fill="currentColor" stroke="none"/>
+    <path d="M7 17.5c0-2 2.2-4 5-4s5 2 5 4-1.5 3.5-5 3.5-5-1.5-5-3.5z" fill="currentColor" stroke="none"/>
+  </symbol>
+
+  <!-- Sparkle / AI -->
+  <symbol id="icon-sparkle" viewBox="0 0 24 24">
+    <path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z" fill="currentColor" stroke="none"/>
+    <path d="M19 15l.87 2.61L22.5 18.5l-2.63.89L19 22l-.87-2.61L15.5 18.5l2.63-.89L19 15z" fill="currentColor" stroke="none" opacity="0.6"/>
+  </symbol>
+
+  <!-- Copy -->
+  <symbol id="icon-copy" viewBox="0 0 24 24">
+    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+  </symbol>
+</svg>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeowNotes - 喵记知识库</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- CSS (order matters) -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/filetree.css">
+  <link rel="stylesheet" href="css/editor.css">
+  <link rel="stylesheet" href="css/ai-panel.css">
+  <link rel="stylesheet" href="css/cat.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+<!-- SVG Icon Sprite (hidden) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><polyline points="9 21 9 14 15 14 15 21"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></symbol>
+  <symbol id="icon-graph" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="8" r="2.5"/><circle cx="8" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><line x1="8.2" y1="7.2" x2="15.8" y2="7.2"/><line x1="7" y1="8.3" x2="7.5" y2="15.7"/><line x1="10" y1="17" x2="15.5" y2="17.5"/><line x1="16.5" y1="10.2" x2="10" y2="16.5"/></symbol>
+  <symbol id="icon-bookmark" viewBox="0 0 24 24"><path d="M5 3h14a1 1 0 011 1v16.5a.5.5 0 01-.78.42L12 16l-7.22 4.92A.5.5 0 014 20.5V4a1 1 0 011-1z"/></symbol>
+  <symbol id="icon-tag" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1.5" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="icon-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></symbol>
+  <symbol id="icon-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+  <symbol id="icon-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></symbol>
+  <symbol id="icon-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></symbol>
+  <symbol id="icon-chevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+  <symbol id="icon-send" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="icon-sparkle" viewBox="0 0 24 24"><path d="M12 2l2.09 6.26L20 10l-5.91 1.74L12 18l-2.09-6.26L4 10l5.91-1.74L12 2z" fill="currentColor" stroke="none"/><path d="M19 15l.87 2.61L22.5 18.5l-2.63.89L19 22l-.87-2.61L15.5 18.5l2.63-.89L19 15z" fill="currentColor" stroke="none" opacity="0.6"/></symbol>
+  <symbol id="icon-paw" viewBox="0 0 24 24"><ellipse cx="8" cy="8" rx="2" ry="2.5" fill="currentColor" stroke="none"/><ellipse cx="16" cy="8" rx="2" ry="2.5" fill="currentColor" stroke="none"/><ellipse cx="5" cy="13" rx="1.8" ry="2.2" fill="currentColor" stroke="none"/><ellipse cx="19" cy="13" rx="1.8" ry="2.2" fill="currentColor" stroke="none"/><path d="M7 17.5c0-2 2.2-4 5-4s5 2 5 4-1.5 3.5-5 3.5-5-1.5-5-3.5z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="icon-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></symbol>
+</svg>
+
+<!-- ===================== APP SHELL ===================== -->
+<div id="app">
+
+  <!-- ============ COLUMN 1: SIDEBAR ============ -->
+  <nav class="sidebar glass-surface">
+    <div class="sidebar__logo">
+      <svg class="icon icon--lg"><use href="#icon-paw"/></svg>
+    </div>
+
+    <div class="sidebar__nav">
+      <button class="sidebar__nav-btn active" data-tooltip="笔记">
+        <svg class="icon"><use href="#icon-home"/></svg>
+      </button>
+      <button class="sidebar__nav-btn" data-tooltip="搜索">
+        <svg class="icon"><use href="#icon-search"/></svg>
+      </button>
+      <button class="sidebar__nav-btn" data-tooltip="知识图谱" data-action="graph">
+        <svg class="icon"><use href="#icon-graph"/></svg>
+      </button>
+      <button class="sidebar__nav-btn" data-tooltip="收藏夹">
+        <svg class="icon"><use href="#icon-bookmark"/></svg>
+      </button>
+      <button class="sidebar__nav-btn" data-tooltip="标签">
+        <svg class="icon"><use href="#icon-tag"/></svg>
+      </button>
+    </div>
+
+    <div class="sidebar__bottom">
+      <div class="sidebar__divider"></div>
+      <button class="sidebar__nav-btn" data-tooltip="设置" data-action="settings">
+        <svg class="icon"><use href="#icon-settings"/></svg>
+      </button>
+      <div class="sidebar__avatar">L</div>
+    </div>
+  </nav>
+
+  <!-- ============ COLUMN 2: FILE TREE ============ -->
+  <aside class="filetree glass-surface glass-surface--light">
+    <!-- Header -->
+    <div class="filetree__header">
+      <h2>笔记</h2>
+      <button class="filetree__new-btn" title="新建笔记">
+        <svg class="icon icon--sm"><use href="#icon-plus"/></svg>
+      </button>
+    </div>
+
+    <!-- Search -->
+    <div class="filetree__search">
+      <span class="filetree__search-icon">
+        <svg class="icon icon--sm"><use href="#icon-search"/></svg>
+      </span>
+      <input class="filetree__search-input" type="text" placeholder="搜索笔记...">
+    </div>
+
+    <!-- Tree -->
+    <div class="filetree__tree">
+      <ul>
+        <!-- Folder: Projects -->
+        <li>
+          <div class="tree-item tree-item--folder open">
+            <span class="tree-item__chevron"><svg class="icon"><use href="#icon-chevron"/></svg></span>
+            <span class="tree-item__icon"><svg class="icon"><use href="#icon-folder"/></svg></span>
+            <span class="tree-item__label">项目文档</span>
+          </div>
+          <ul>
+            <li>
+              <div class="tree-item tree-item--file active">
+                <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+                <span class="tree-item__label">喵记设计规范</span>
+              </div>
+            </li>
+            <li>
+              <div class="tree-item tree-item--file">
+                <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+                <span class="tree-item__label">系统架构方案</span>
+              </div>
+            </li>
+            <li>
+              <div class="tree-item tree-item--file">
+                <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+                <span class="tree-item__label">Tauri 集成笔记</span>
+              </div>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Folder: Knowledge Base -->
+        <li>
+          <div class="tree-item tree-item--folder">
+            <span class="tree-item__chevron"><svg class="icon"><use href="#icon-chevron"/></svg></span>
+            <span class="tree-item__icon"><svg class="icon"><use href="#icon-folder"/></svg></span>
+            <span class="tree-item__label">知识库</span>
+          </div>
+          <ul style="display:none">
+            <li>
+              <div class="tree-item tree-item--file">
+                <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+                <span class="tree-item__label">Rust 入门笔记</span>
+              </div>
+            </li>
+            <li>
+              <div class="tree-item tree-item--file">
+                <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+                <span class="tree-item__label">WebGPU 渲染原理</span>
+              </div>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Folder: Journal -->
+        <li>
+          <div class="tree-item tree-item--folder">
+            <span class="tree-item__chevron"><svg class="icon"><use href="#icon-chevron"/></svg></span>
+            <span class="tree-item__icon"><svg class="icon"><use href="#icon-folder"/></svg></span>
+            <span class="tree-item__label">日记</span>
+          </div>
+          <ul style="display:none">
+            <li>
+              <div class="tree-item tree-item--file">
+                <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+                <span class="tree-item__label">2026-04-22</span>
+              </div>
+            </li>
+            <li>
+              <div class="tree-item tree-item--file">
+                <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+                <span class="tree-item__label">2026-04-21</span>
+              </div>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Single Note -->
+        <li>
+          <div class="tree-item tree-item--file">
+            <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+            <span class="tree-item__label">随想杂记</span>
+          </div>
+        </li>
+        <li>
+          <div class="tree-item tree-item--file">
+            <span class="tree-item__icon"><svg class="icon"><use href="#icon-file"/></svg></span>
+            <span class="tree-item__label">阅读清单</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Tags -->
+    <div class="filetree__tags">
+      <span class="filetree__tags-title">标签</span>
+      <span class="glass-tag">#设计</span>
+      <span class="glass-tag">#AI</span>
+      <span class="glass-tag">#开发</span>
+      <span class="glass-tag">#前端</span>
+      <span class="glass-tag">#交互</span>
+    </div>
+
+    <!-- Graph Overlay (inside filetree for positioning) -->
+    <div class="graph-overlay">
+      <div class="graph-overlay__header">
+        <h3>知识图谱</h3>
+        <button class="graph-overlay__close sidebar__nav-btn">
+          <svg class="icon icon--sm"><use href="#icon-close"/></svg>
+        </button>
+      </div>
+      <div class="graph-overlay__content">
+        <svg viewBox="0 0 280 180" width="100%" height="100%">
+          <!-- Edges -->
+          <line x1="140" y1="50" x2="60" y2="90" stroke="#A0AEC0" stroke-width="1" opacity="0.3"/>
+          <line x1="140" y1="50" x2="220" y2="80" stroke="#A0AEC0" stroke-width="1" opacity="0.3"/>
+          <line x1="140" y1="50" x2="100" y2="140" stroke="#A0AEC0" stroke-width="1" opacity="0.3"/>
+          <line x1="60" y1="90" x2="100" y2="140" stroke="#A0AEC0" stroke-width="1" opacity="0.3"/>
+          <line x1="220" y1="80" x2="200" y2="140" stroke="#A0AEC0" stroke-width="1" opacity="0.3"/>
+          <line x1="140" y1="50" x2="200" y2="140" stroke="#A0AEC0" stroke-width="1" opacity="0.3"/>
+          <line x1="60" y1="90" x2="40" y2="150" stroke="#A0AEC0" stroke-width="1" opacity="0.3"/>
+          <line x1="100" y1="140" x2="200" y2="140" stroke="#A0AEC0" stroke-width="1" opacity="0.3"/>
+
+          <!-- Nodes -->
+          <g class="graph-node">
+            <circle cx="140" cy="50" r="8" fill="#FFB067" opacity="0.9"/>
+            <text x="140" y="38" text-anchor="middle" font-size="8" fill="#2D3748" font-family="Inter">设计规范</text>
+          </g>
+          <g class="graph-node">
+            <circle cx="60" cy="90" r="6" fill="#8A94A5" opacity="0.6"/>
+            <text x="60" y="78" text-anchor="middle" font-size="7" fill="#8A94A5" font-family="Inter">系统架构</text>
+          </g>
+          <g class="graph-node">
+            <circle cx="220" cy="80" r="6" fill="#8A94A5" opacity="0.6"/>
+            <text x="220" y="68" text-anchor="middle" font-size="7" fill="#8A94A5" font-family="Inter">Tauri</text>
+          </g>
+          <g class="graph-node">
+            <circle cx="100" cy="140" r="5" fill="#8A94A5" opacity="0.5"/>
+            <text x="100" y="155" text-anchor="middle" font-size="7" fill="#8A94A5" font-family="Inter">Rust</text>
+          </g>
+          <g class="graph-node">
+            <circle cx="200" cy="140" r="5" fill="#8A94A5" opacity="0.5"/>
+            <text x="200" y="155" text-anchor="middle" font-size="7" fill="#8A94A5" font-family="Inter">渲染引擎</text>
+          </g>
+          <g class="graph-node">
+            <circle cx="40" cy="150" r="4" fill="#8A94A5" opacity="0.4"/>
+            <text x="40" y="163" text-anchor="middle" font-size="6" fill="#A0AEC0" font-family="Inter">随想</text>
+          </g>
+          <g class="graph-node">
+            <circle cx="250" cy="130" r="4" fill="#8A94A5" opacity="0.4"/>
+            <text x="250" y="143" text-anchor="middle" font-size="6" fill="#A0AEC0" font-family="Inter">日记</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ COLUMN 3: EDITOR ============ -->
+  <main class="editor glass-surface glass-surface--solid">
+    <!-- Toolbar -->
+    <div class="editor__toolbar">
+      <div class="editor__breadcrumb">
+        <span>项目文档</span>
+        <span class="separator">/</span>
+        <span>喵记设计规范</span>
+      </div>
+      <div class="editor__meta">
+        <span>2026年4月22日</span>
+        <span class="dot"></span>
+        <span>1,247 字</span>
+        <span class="dot"></span>
+        <span class="glass-tag">#设计</span>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="editor__content">
+      <div class="editor__content-inner">
+
+        <h1 contenteditable="true" spellcheck="false">喵记知识库设计规范</h1>
+
+        <p>喵记知识库是一款面向开发者和知识工作者的本地优先笔记工具，兼顾<strong>深度专注</strong>与<em>趣味陪伴</em>两大核心体验。它将双向链接的知识管理能力与 AI 驱动的猫咪宠物伴侣巧妙融合，打造「沉浸写作 + 智能助手 + 情绪价值」三位一体的桌面端应用。</p>
+
+        <h2>核心架构</h2>
+
+        <p>应用采用<strong>非对称四栏布局</strong>，在保障编辑区最大沉浸空间的同时，让导航与 AI 助手随时可达。设计理念源自
+        <span class="bilink">
+          [[毛玻璃拟态设计原则]]
+          <span class="bilink__preview">
+            <div class="bilink__preview-title">毛玻璃拟态设计原则</div>
+            <div class="bilink__preview-text">一种现代 UI 设计趋势，通过磨砂玻璃效果、半透明背景和柔和模糊来营造界面的深度感与层次感，让元素之间产生自然的视觉分隔...</div>
+          </span>
+        </span>
+        ，打造无硬边框的纯净分层界面。</p>
+
+        <p>数据采用 Markdown 文件与轻量级 SQLite 数据库的组合方式存储在本地，确保完全离线可用和用户数据主权。这一设计遵循了
+        <span class="bilink">
+          [[本地优先软件宣言]]
+          <span class="bilink__preview">
+            <div class="bilink__preview-title">本地优先软件宣言</div>
+            <div class="bilink__preview-text">一种软件设计理念：数据主要在用户本地设备上存储和处理，云端同步仅作为辅助机制，确保用户对自己数据拥有完全的控制权...</div>
+          </span>
+        </span>
+        的核心原则。</p>
+
+        <!-- Code Block -->
+        <div class="code-block">
+          <div class="code-block__header">
+            <span class="code-block__lang">typescript</span>
+            <span class="code-block__copy">复制</span>
+          </div>
+          <pre><code><span class="keyword">interface</span> <span class="type">NoteDocument</span> <span class="punctuation">{</span>
+  <span class="variable">id</span><span class="punctuation">:</span> <span class="type">string</span><span class="punctuation">;</span>
+  <span class="variable">title</span><span class="punctuation">:</span> <span class="type">string</span><span class="punctuation">;</span>
+  <span class="variable">content</span><span class="punctuation">:</span> <span class="type">string</span><span class="punctuation">;</span>       <span class="comment">// 原始 Markdown 内容</span>
+  <span class="variable">backlinks</span><span class="punctuation">:</span> <span class="type">string</span><span class="punctuation">[];</span>    <span class="comment">// 关联文档 ID 列表</span>
+  <span class="variable">tags</span><span class="punctuation">:</span> <span class="type">string</span><span class="punctuation">[];</span>
+  <span class="variable">createdAt</span><span class="punctuation">:</span> <span class="type">Date</span><span class="punctuation">;</span>
+  <span class="variable">updatedAt</span><span class="punctuation">:</span> <span class="type">Date</span><span class="punctuation">;</span>
+<span class="punctuation">}</span>
+
+<span class="keyword">const</span> <span class="function">createNote</span> <span class="operator">=</span> <span class="keyword">async</span> <span class="punctuation">(</span><span class="variable">title</span><span class="punctuation">:</span> <span class="type">string</span><span class="punctuation">)</span><span class="punctuation">:</span> <span class="type">Promise</span><span class="operator">&lt;</span><span class="type">NoteDocument</span><span class="operator">&gt;</span> <span class="operator">=&gt;</span> <span class="punctuation">{</span>
+  <span class="keyword">const</span> <span class="variable">note</span> <span class="operator">=</span> <span class="punctuation">{</span>
+    <span class="variable">id</span><span class="punctuation">:</span> <span class="function">generateId</span><span class="punctuation">(),</span>
+    <span class="variable">title</span><span class="punctuation">,</span>
+    <span class="variable">content</span><span class="punctuation">:</span> <span class="string">''</span><span class="punctuation">,</span>
+    <span class="variable">backlinks</span><span class="punctuation">:</span> <span class="punctuation">[],</span>
+    <span class="variable">tags</span><span class="punctuation">:</span> <span class="punctuation">[],</span>
+    <span class="variable">createdAt</span><span class="punctuation">:</span> <span class="keyword">new</span> <span class="type">Date</span><span class="punctuation">(),</span>
+    <span class="variable">updatedAt</span><span class="punctuation">:</span> <span class="keyword">new</span> <span class="type">Date</span><span class="punctuation">()</span>
+  <span class="punctuation">};</span>
+  <span class="keyword">await</span> <span class="function">saveToLocal</span><span class="punctuation">(</span><span class="variable">note</span><span class="punctuation">);</span>
+  <span class="keyword">return</span> <span class="variable">note</span><span class="punctuation">;</span>
+<span class="punctuation">};</span></code></pre>
+        </div>
+
+        <h2>AI 宠物伴侣系统</h2>
+
+        <p>AI 猫咪伴侣驻留在界面的第四栏，承担多重角色：</p>
+
+        <ul>
+          <li><strong>语境感知辅助</strong> - 猫咪会观察你的写作上下文，提供内联建议、内容摘要和组织优化提示。</li>
+          <li><strong>情绪陪伴互动</strong> - 通过生动的动画响应和趣味互动，在长时间写作中营造陪伴感。</li>
+          <li><strong>文档操作动效</strong> - 将文档拖拽给猫咪即可归档，猫咪会跃起张嘴「吃掉」文档，配合令人满足的吞咽动画。</li>
+        </ul>
+
+        <!-- AI Suggestion -->
+        <div class="ai-suggestion">
+          <div class="ai-suggestion__header">
+            <svg class="icon icon--sm" style="color: var(--color-accent)"><use href="#icon-sparkle"/></svg>
+            <span>AI 建议</span>
+          </div>
+          <div class="ai-suggestion__text" data-typewriter data-text="建议补充关于知识图谱可视化算法的章节。力导向布局可以使用 D3.js 实现，或采用更轻量的 ngraph.forcelayout 库以获得更好的实时渲染性能。同时建议为图谱节点添加颜色编码以区分不同类型的笔记。" data-delay="2500" data-speed="35">建议补充关于知识图谱可视化算法的章节。力导向布局可以使用 D3.js 实现，或采用更轻量的 ngraph.forcelayout 库以获得更好的实时渲染性能。同时建议为图谱节点添加颜色编码以区分不同类型的笔记。</div>
+        </div>
+
+        <blockquote>
+          「最好的工具，是让人感觉它是思维的自然延伸。喵记的目标是：在你心流状态时隐于无形，在你需要灵感时温柔出现。」
+        </blockquote>
+
+        <hr>
+
+        <h3>技术栈选型</h3>
+
+        <p>应用使用 <code>Tauri 2.0</code> 构建桌面外壳，<code>React 18</code> 负责 UI 层，<code>Three.js</code> 用于 3D 猫咪渲染。状态管理选用 <code>Zustand</code>，因其 API 精简且对 TypeScript 支持优秀。</p>
+
+        <p>知识图谱采用自研的力导向布局算法，针对最多 500 个节点的实时渲染进行了优化。Markdown 编辑器底层基于
+        <span class="bilink">
+          [[ProseMirror 架构设计]]
+          <span class="bilink__preview">
+            <div class="bilink__preview-title">ProseMirror 架构设计</div>
+            <div class="bilink__preview-text">一套基于函数式、不可变文档模型构建富文本编辑器的工具集，拥有强大的插件系统，支持协同编辑和自定义节点类型...</div>
+          </span>
+        </span>
+        框架，并通过自定义插件扩展了双向链接解析和 AI 内联建议功能。</p>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ COLUMN 4: AI & PET PANEL ============ -->
+  <aside class="ai-panel glass-surface">
+
+    <!-- Pet Zone -->
+    <div class="ai-panel__pet-zone">
+      <div class="cat-stage">
+        <div class="cat-actor" data-state="idle">
+          <img src="assets/cat-idle.png"    class="cat-pose cat-pose--idle" draggable="false" alt=""/>
+          <img src="assets/cat-walk.png"    class="cat-pose cat-pose--walk" draggable="false" alt=""/>
+          <img src="assets/cat-lick.png"    class="cat-pose cat-pose--lick" draggable="false" alt=""/>
+          <img src="assets/cat-stretch.png" class="cat-pose cat-pose--stretch" draggable="false" alt=""/>
+          <img src="assets/cat-sleep.png"   class="cat-pose cat-pose--sleep" draggable="false" alt=""/>
+        </div>
+        <!-- Ground shadow follows actor -->
+        <div class="cat-shadow"></div>
+        <!-- Zzz particles -->
+        <div class="cat-zzz">
+          <span class="zzz-1">z</span>
+          <span class="zzz-2">Z</span>
+          <span class="zzz-3">z</span>
+        </div>
+        <!-- Sparkles -->
+        <div class="cat-sparkles">
+          <div class="cat-sparkle"></div>
+          <div class="cat-sparkle"></div>
+          <div class="cat-sparkle"></div>
+          <div class="cat-sparkle"></div>
+        </div>
+      </div>
+
+      <div class="cat-status">
+        <span class="cat-status__mood">😺 好奇中</span>
+        <span class="cat-status__activity">正在看你写字...</span>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="ai-panel__divider"></div>
+
+    <!-- Chat Zone -->
+    <div class="ai-panel__chat">
+      <div class="ai-panel__chat-title">AI 助手</div>
+
+      <div class="chat__messages">
+        <!-- AI Message -->
+        <div class="chat-bubble chat-bubble--ai">
+          <div class="chat-bubble__avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28">
+              <circle cx="16" cy="16" r="16" fill="url(#avatarGrad2)"/>
+              <defs><linearGradient id="avatarGrad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#FFD4A8"/><stop offset="100%" style="stop-color:#FFB067"/></linearGradient></defs>
+              <path d="M7 12 L5 4 L12 10 Z" fill="#FFB067"/><path d="M25 12 L27 4 L20 10 Z" fill="#FFB067"/>
+              <circle cx="16" cy="15" r="9" fill="#FFB067"/>
+              <ellipse cx="13" cy="14" rx="2" ry="2.2" fill="#2D3748"/><circle cx="13.8" cy="13.3" r="0.8" fill="white" opacity="0.8"/>
+              <ellipse cx="19" cy="14" rx="2" ry="2.2" fill="#2D3748"/><circle cx="19.8" cy="13.3" r="0.8" fill="white" opacity="0.8"/>
+              <ellipse cx="16" cy="17" rx="1.2" ry="0.8" fill="#FF9B9B"/>
+            </svg>
+          </div>
+          <div class="chat-bubble__content">
+            嗨！我注意到你正在写喵记的设计规范，文档结构看起来很棒！需要我帮你优化一下内容吗？
+          </div>
+        </div>
+
+        <!-- User Message -->
+        <div class="chat-bubble chat-bubble--user">
+          <div class="chat-bubble__content">
+            好的，能帮我完善一下 AI 宠物伴侣那个章节吗？我想把交互描述写得更具体一些。
+          </div>
+        </div>
+
+        <!-- AI Response -->
+        <div class="chat-bubble chat-bubble--ai">
+          <div class="chat-bubble__avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28">
+              <circle cx="16" cy="16" r="16" fill="url(#avatarGrad2)"/>
+              <path d="M7 12 L5 4 L12 10 Z" fill="#FFB067"/><path d="M25 12 L27 4 L20 10 Z" fill="#FFB067"/>
+              <circle cx="16" cy="15" r="9" fill="#FFB067"/>
+              <ellipse cx="13" cy="14" rx="2" ry="2.2" fill="#2D3748"/><circle cx="13.8" cy="13.3" r="0.8" fill="white" opacity="0.8"/>
+              <ellipse cx="19" cy="14" rx="2" ry="2.2" fill="#2D3748"/><circle cx="19.8" cy="13.3" r="0.8" fill="white" opacity="0.8"/>
+              <ellipse cx="16" cy="17" rx="1.2" ry="0.8" fill="#FF9B9B"/>
+            </svg>
+          </div>
+          <div class="chat-bubble__content">
+            没问题！这里有 3 个具体的交互模式建议：
+            <br><br>
+            <strong>1. 文档吞咽</strong> - 把文件拖到猫咪身上，它会跳起来张嘴「吃掉」并归档。
+            <br><br>
+            <strong>2. 标签吸入</strong> - 批量打标签时，猫咪会掏出迷你吸尘器吸入零散标签。
+            <br><br>
+            <strong>3. 慵懒打盹</strong> - 30秒无操作后，猫咪蜷缩起来并飘出 Zzz 粒子效果。
+          </div>
+        </div>
+
+        <!-- Typing Indicator -->
+        <div class="chat-bubble chat-bubble--ai">
+          <div class="chat-bubble__avatar">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28">
+              <circle cx="16" cy="16" r="16" fill="url(#avatarGrad2)"/>
+              <path d="M7 12 L5 4 L12 10 Z" fill="#FFB067"/><path d="M25 12 L27 4 L20 10 Z" fill="#FFB067"/>
+              <circle cx="16" cy="15" r="9" fill="#FFB067"/>
+              <ellipse cx="13" cy="14" rx="2" ry="2.2" fill="#2D3748"/><circle cx="13.8" cy="13.3" r="0.8" fill="white" opacity="0.8"/>
+              <ellipse cx="19" cy="14" rx="2" ry="2.2" fill="#2D3748"/><circle cx="19.8" cy="13.3" r="0.8" fill="white" opacity="0.8"/>
+              <ellipse cx="16" cy="17" rx="1.2" ry="0.8" fill="#FF9B9B"/>
+            </svg>
+          </div>
+          <div class="chat-bubble__content">
+            <div class="typing-indicator">
+              <span class="typing-indicator__dot"></span>
+              <span class="typing-indicator__dot"></span>
+              <span class="typing-indicator__dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat__input">
+        <input class="chat__input-field" type="text" placeholder="问问你的 AI 猫咪...">
+        <button class="chat__send-btn">
+          <svg class="icon"><use href="#icon-send"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+</div><!-- #app -->
+
+<!-- ============ SETTINGS MODAL ============ -->
+<div class="settings-overlay">
+  <div class="settings-modal">
+    <div class="settings-modal__header">
+      <h2>设置</h2>
+      <button class="settings-modal__close">
+        <svg class="icon icon--sm"><use href="#icon-close"/></svg>
+      </button>
+    </div>
+    <div class="settings-modal__tabs">
+      <button class="settings-tab active">外观</button>
+      <button class="settings-tab">编辑器</button>
+      <button class="settings-tab">AI</button>
+      <button class="settings-tab">关于</button>
+    </div>
+    <div class="settings-modal__body">
+      <div class="settings-item">
+        <div>
+          <div class="settings-item__label">深色模式</div>
+          <div class="settings-item__desc">切换至深色配色方案</div>
+        </div>
+        <div class="toggle"></div>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-item__label">毛玻璃效果</div>
+          <div class="settings-item__desc">启用磨砂玻璃模糊特效</div>
+        </div>
+        <div class="toggle active"></div>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-item__label">猫咪动画</div>
+          <div class="settings-item__desc">显示 AI 宠物伴侣动画</div>
+        </div>
+        <div class="toggle active"></div>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-item__label">阅读字体</div>
+          <div class="settings-item__desc">使用霞鹜文楷作为正文字体</div>
+        </div>
+        <div class="toggle"></div>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-item__label">AI 内联建议</div>
+          <div class="settings-item__desc">写作时实时显示智能建议</div>
+        </div>
+        <div class="toggle active"></div>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-item__label">自动保存</div>
+          <div class="settings-item__desc">每 30 秒自动保存更改</div>
+        </div>
+        <div class="toggle active"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/cat-animation.js"></script>
+<script src="js/typewriter.js"></script>
+<script src="js/interactions.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+/* ============================================
+   MeowNotes / 喵记知识库 - Glassmorphism System
+   ============================================ */
+
+/* --- Base Glass Surface --- */
+.glass-surface {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-1);
+  transition: box-shadow var(--transition-normal), background var(--transition-normal);
+}
+
+/* Light variant (file tree) */
+.glass-surface--light {
+  background: var(--color-glass-bg-light);
+}
+
+/* Solid variant (editor - more paper-like) */
+.glass-surface--solid {
+  background: var(--color-glass-bg-solid);
+}
+
+/* Elevated state (hover) */
+.glass-surface--elevated,
+.glass-surface:hover {
+  box-shadow: var(--elevation-2);
+  background: var(--color-glass-bg-hover);
+}
+
+/* Deep variant (modals, overlays) */
+.glass-surface--deep {
+  background: var(--color-glass-bg-deep);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--elevation-3);
+}
+
+/* --- No auto-hover for panels (they stay at level 1) --- */
+.sidebar:hover,
+.filetree:hover,
+.editor:hover,
+.ai-panel:hover {
+  box-shadow: var(--elevation-1);
+  background: var(--color-glass-bg);
+}
+
+.editor:hover {
+  background: var(--color-glass-bg-solid);
+}
+
+.filetree:hover {
+  background: var(--color-glass-bg-light);
+}
+
+/* --- AI Glow Effect --- */
+.ai-glow {
+  position: relative;
+}
+
+.ai-glow::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 176, 103, 0.15) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  pointer-events: none;
+  animation: ai-breathe 3s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes ai-breathe {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* --- Glass Button --- */
+.glass-btn {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.glass-btn:hover {
+  background: var(--color-glass-bg-hover);
+  box-shadow: var(--elevation-2);
+  transform: translateY(-1px);
+}
+
+.glass-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--elevation-1);
+}
+
+/* --- Glass Input --- */
+.glass-input {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2) var(--space-4);
+  transition: all var(--transition-fast);
+  color: var(--color-text-dark);
+}
+
+.glass-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft), var(--elevation-1);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* --- Glass Tag --- */
+.glass-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  background: var(--color-tag-bg);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-caption);
+  color: var(--color-accent-text);
+  font-weight: var(--font-weight-medium);
+  transition: background var(--transition-fast);
+  cursor: default;
+}
+
+.glass-tag:hover {
+  background: rgba(255, 176, 103, 0.2);
+}

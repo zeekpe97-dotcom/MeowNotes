@@ -1,0 +1,273 @@
+/* ============================================
+   MeowNotes - Living Cat Animation System
+   Multi-pose with walking, grooming, stretching
+   ============================================ */
+
+/* --- Stage: the area cat can move in --- */
+.cat-stage {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* --- Actor: the moving cat element --- */
+.cat-actor {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: left 3s ease-in-out;
+  will-change: left, transform;
+  cursor: pointer;
+}
+
+/* Walking uses a class to flip direction */
+.cat-actor.facing-left {
+  transform: translateX(-50%) scaleX(-1);
+}
+
+/* --- Pose Images --- */
+.cat-pose {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  /* Remove white background: multiply + soft edge mask */
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at center 55%, black 40%, transparent 72%);
+  mask-image: radial-gradient(ellipse 80% 80% at center 55%, black 40%, transparent 72%);
+}
+
+/* Only the active pose is visible */
+.cat-actor[data-state="idle"]    .cat-pose--idle,
+.cat-actor[data-state="walk"]    .cat-pose--walk,
+.cat-actor[data-state="lick"]    .cat-pose--lick,
+.cat-actor[data-state="stretch"] .cat-pose--stretch,
+.cat-actor[data-state="sleep"]   .cat-pose--sleep,
+.cat-actor[data-state="active"]  .cat-pose--idle {
+  opacity: 1;
+}
+
+/* --- Idle: gentle breathing bob --- */
+.cat-actor[data-state="idle"] {
+  animation: idle-breathe 3.5s ease-in-out infinite;
+}
+
+@keyframes idle-breathe {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-3px); }
+}
+
+.cat-actor[data-state="idle"].facing-left {
+  animation: idle-breathe-flip 3.5s ease-in-out infinite;
+}
+
+@keyframes idle-breathe-flip {
+  0%, 100% { transform: translateX(-50%) scaleX(-1) translateY(0); }
+  50% { transform: translateX(-50%) scaleX(-1) translateY(-3px); }
+}
+
+/* --- Walk: bobbing while moving --- */
+.cat-actor[data-state="walk"] {
+  animation: walk-bob 0.5s ease-in-out infinite;
+}
+
+@keyframes walk-bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+.cat-actor[data-state="walk"].facing-left {
+  animation: walk-bob-flip 0.5s ease-in-out infinite;
+}
+
+@keyframes walk-bob-flip {
+  0%, 100% { transform: translateX(-50%) scaleX(-1) translateY(0); }
+  50% { transform: translateX(-50%) scaleX(-1) translateY(-4px); }
+}
+
+/* --- Lick: gentle head bob while grooming --- */
+.cat-actor[data-state="lick"] {
+  animation: lick-bob 1.2s ease-in-out infinite;
+}
+
+@keyframes lick-bob {
+  0%, 100% { transform: translateX(-50%) rotate(0deg); }
+  30% { transform: translateX(-50%) rotate(-2deg) translateY(-1px); }
+  70% { transform: translateX(-50%) rotate(1deg) translateY(1px); }
+}
+
+.cat-actor[data-state="lick"].facing-left {
+  animation: lick-bob-flip 1.2s ease-in-out infinite;
+}
+
+@keyframes lick-bob-flip {
+  0%, 100% { transform: translateX(-50%) scaleX(-1) rotate(0deg); }
+  30% { transform: translateX(-50%) scaleX(-1) rotate(2deg) translateY(-1px); }
+  70% { transform: translateX(-50%) scaleX(-1) rotate(-1deg) translateY(1px); }
+}
+
+/* --- Stretch: exaggerated body movement --- */
+.cat-actor[data-state="stretch"] {
+  animation: stretch-move 2s ease-in-out;
+}
+
+@keyframes stretch-move {
+  0% { transform: translateX(-50%) scaleX(1) scaleY(1); }
+  25% { transform: translateX(-50%) scaleX(1.05) scaleY(0.95); }
+  50% { transform: translateX(-50%) scaleX(0.97) scaleY(1.03); }
+  100% { transform: translateX(-50%) scaleX(1) scaleY(1); }
+}
+
+/* --- Sleep: slow breathing --- */
+.cat-actor[data-state="sleep"] {
+  animation: sleep-breathe 5s ease-in-out infinite;
+}
+
+@keyframes sleep-breathe {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.015); }
+}
+
+/* --- Active (user interaction): excited bounce --- */
+.cat-actor[data-state="active"] {
+  animation: active-bounce 0.5s ease-out;
+}
+
+@keyframes active-bounce {
+  0% { transform: translateX(-50%) translateY(0) scale(1); }
+  20% { transform: translateX(-50%) translateY(-14px) scale(1.06); }
+  40% { transform: translateX(-50%) translateY(-4px) scale(1.02); }
+  60% { transform: translateX(-50%) translateY(-10px) scale(1.04); }
+  80% { transform: translateX(-50%) translateY(-2px) scale(1.01); }
+  100% { transform: translateX(-50%) translateY(0) scale(1); }
+}
+
+/* --- Ground Shadow --- */
+.cat-shadow {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 8px;
+  background: radial-gradient(
+    ellipse,
+    rgba(0, 0, 0, 0.06) 0%,
+    rgba(0, 0, 0, 0.02) 50%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  z-index: 0;
+  transition: left 3s ease-in-out, width 0.6s ease, opacity 0.4s ease;
+  pointer-events: none;
+}
+
+/* --- Zzz Particles --- */
+.cat-zzz {
+  position: absolute;
+  top: 15px;
+  right: 30%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 2;
+}
+
+.cat-stage:has(.cat-actor[data-state="sleep"]) .cat-zzz {
+  opacity: 1;
+}
+
+.cat-zzz span {
+  position: absolute;
+  font-weight: 700;
+  color: var(--color-accent, #FFB067);
+  font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+.cat-zzz .zzz-1 {
+  font-size: 12px;
+  right: 0;
+  top: 0;
+  animation: zzz-float 3s ease-out infinite;
+  opacity: 0.7;
+}
+
+.cat-zzz .zzz-2 {
+  font-size: 16px;
+  right: -8px;
+  top: -12px;
+  animation: zzz-float 3s ease-out infinite 1s;
+  opacity: 0.5;
+}
+
+.cat-zzz .zzz-3 {
+  font-size: 10px;
+  right: -14px;
+  top: -22px;
+  animation: zzz-float 3s ease-out infinite 2s;
+  opacity: 0.4;
+}
+
+@keyframes zzz-float {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  50% { opacity: 0.4; }
+  100% { transform: translate(10px, -20px) scale(0.5); opacity: 0; }
+}
+
+/* --- Sparkle particles (active) --- */
+.cat-sparkles {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 3;
+}
+
+.cat-stage:has(.cat-actor[data-state="active"]) .cat-sparkles {
+  opacity: 1;
+}
+
+.cat-sparkle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent, #FFB067);
+}
+
+.cat-sparkle:nth-child(1) { animation: sp1 1s ease-out infinite; }
+.cat-sparkle:nth-child(2) { animation: sp2 1s ease-out 0.15s infinite; }
+.cat-sparkle:nth-child(3) { animation: sp3 1s ease-out 0.3s infinite; }
+.cat-sparkle:nth-child(4) { animation: sp4 1s ease-out 0.45s infinite; }
+
+@keyframes sp1 {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(-22px,-28px) scale(0); opacity: 0; }
+}
+@keyframes sp2 {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(24px,-22px) scale(0); opacity: 0; }
+}
+@keyframes sp3 {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(-18px,16px) scale(0); opacity: 0; }
+}
+@keyframes sp4 {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(20px,14px) scale(0); opacity: 0; }
+}

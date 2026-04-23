@@ -1,0 +1,44 @@
+/* ============================================
+   MeowNotes / 喵记知识库 - Layout Grid
+   ============================================ */
+
+#app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) var(--filetree-width) 1fr var(--ai-panel-width);
+  grid-template-rows: 100%;
+  gap: var(--panel-gap);
+  padding: var(--app-padding);
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Remove outer border-radius on adjacent edges for seamless panel joining */
+.sidebar {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.filetree {
+  border-radius: 0;
+}
+
+.editor {
+  border-radius: 0;
+}
+
+.ai-panel {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Keep outer corners rounded */
+.sidebar {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.ai-panel {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}

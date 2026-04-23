@@ -1,0 +1,203 @@
+/* ============================================
+   MeowNotes - File Tree (Column 2)
+   ============================================ */
+
+.filetree {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-5) var(--space-4);
+  overflow: hidden;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+/* --- Header --- */
+.filetree__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  flex-shrink: 0;
+}
+
+.filetree__header h2 {
+  font-size: var(--font-size-sidebar);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-dark);
+  letter-spacing: 0.02em;
+}
+
+.filetree__new-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color: var(--color-accent);
+  background: var(--color-accent-bg);
+  transition: all var(--transition-fast);
+}
+
+.filetree__new-btn:hover {
+  background: rgba(255, 176, 103, 0.2);
+  transform: scale(1.08);
+}
+
+/* --- Search --- */
+.filetree__search {
+  position: relative;
+  margin-bottom: var(--space-4);
+  flex-shrink: 0;
+}
+
+.filetree__search-icon {
+  position: absolute;
+  left: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-light);
+  pointer-events: none;
+}
+
+.filetree__search-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 var(--space-3) 0 var(--space-10);
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-caption);
+  color: var(--color-text-dark);
+  transition: all var(--transition-fast);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.filetree__search-input:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft), inset 0 1px 3px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* --- Tree --- */
+.filetree__tree {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0 calc(-1 * var(--space-2));
+  padding: 0 var(--space-2);
+}
+
+.filetree__tree ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.filetree__tree ul ul {
+  padding-left: var(--space-4);
+}
+
+/* --- Tree Item --- */
+.tree-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 32px;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sidebar);
+  color: var(--color-text-dark);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-item:hover {
+  background: rgba(0, 0, 0, 0.03);
+  transform: translateX(2px);
+}
+
+.tree-item.active {
+  background: rgba(255, 176, 103, 0.1);
+  color: var(--color-text-dark);
+  font-weight: var(--font-weight-medium);
+  position: relative;
+}
+
+.tree-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  background: var(--color-accent);
+  border-radius: var(--radius-full);
+}
+
+/* --- Tree Icons --- */
+.tree-item__icon {
+  flex-shrink: 0;
+  color: var(--color-text-mid);
+  display: flex;
+  align-items: center;
+}
+
+.tree-item__icon .icon {
+  width: 16px;
+  height: 16px;
+}
+
+.tree-item--folder .tree-item__icon {
+  color: var(--color-accent);
+}
+
+/* --- Chevron --- */
+.tree-item__chevron {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast);
+  color: var(--color-text-light);
+}
+
+.tree-item__chevron .icon {
+  width: 12px;
+  height: 12px;
+}
+
+.tree-item--folder.open > .tree-item__chevron {
+  transform: rotate(90deg);
+}
+
+.tree-item__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Tags Section --- */
+.filetree__tags {
+  flex-shrink: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  margin-top: var(--space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.filetree__tags-title {
+  width: 100%;
+  font-size: var(--font-size-small);
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-1);
+  font-weight: var(--font-weight-medium);
+}

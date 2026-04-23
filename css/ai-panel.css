@@ -1,0 +1,293 @@
+/* ============================================
+   MeowNotes - AI & Pet Panel (Column 4)
+   ============================================ */
+
+.ai-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Warm ambient tint overlay */
+.ai-panel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at 50% 25%,
+    rgba(255, 176, 103, 0.05) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ai-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Pet Zone (top ~38%) --- */
+.ai-panel__pet-zone {
+  flex: 0 0 38%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-3) var(--space-3) 0;
+  position: relative;
+}
+
+/* AI Glow behind cat stage */
+.cat-stage::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 176, 103, 0.1) 0%,
+    rgba(255, 176, 103, 0.03) 40%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  pointer-events: none;
+  animation: ai-breathe 3s ease-in-out infinite;
+}
+
+/* --- Cat Status --- */
+.cat-status {
+  text-align: center;
+  margin-top: var(--space-3);
+}
+
+.cat-status__mood {
+  display: block;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-dark);
+  margin-bottom: 2px;
+}
+
+.cat-status__activity {
+  display: block;
+  font-size: var(--font-size-small);
+  color: var(--color-text-light);
+  transition: opacity var(--transition-normal);
+}
+
+/* --- Divider --- */
+.ai-panel__divider {
+  height: 1px;
+  margin: 0 var(--space-5);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 176, 103, 0.25),
+    transparent
+  );
+  flex-shrink: 0;
+}
+
+/* --- Chat Zone (bottom ~62%) --- */
+.ai-panel__chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--space-4);
+}
+
+.ai-panel__chat-title {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* --- Messages --- */
+.chat__messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-right: var(--space-1);
+}
+
+/* --- Chat Bubble --- */
+.chat-bubble {
+  display: flex;
+  gap: var(--space-2);
+  max-width: 95%;
+  animation: bubble-in 0.3s ease-out;
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* AI Bubble (left aligned) */
+.chat-bubble--ai {
+  align-self: flex-start;
+}
+
+.chat-bubble__avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #FFD4A8, var(--color-accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.chat-bubble__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chat-bubble--ai .chat-bubble__content {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-md);
+  border-top-left-radius: var(--space-1);
+  padding: var(--space-3);
+  font-size: var(--font-size-sidebar);
+  line-height: 1.5;
+  color: var(--color-text-dark);
+}
+
+/* User Bubble (right aligned) */
+.chat-bubble--user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.chat-bubble--user .chat-bubble__content {
+  background: rgba(255, 176, 103, 0.12);
+  border: 1px solid rgba(255, 176, 103, 0.15);
+  border-radius: var(--radius-md);
+  border-bottom-right-radius: var(--space-1);
+  padding: var(--space-3);
+  font-size: var(--font-size-sidebar);
+  line-height: 1.5;
+  color: var(--color-text-dark);
+}
+
+/* --- Typing Indicator --- */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-2) var(--space-3);
+}
+
+.typing-indicator__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  animation: typing-bounce 1.4s ease-in-out infinite;
+}
+
+.typing-indicator__dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-indicator__dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
+/* --- Chat Input --- */
+.chat__input {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.chat__input-field {
+  flex: 1;
+  height: 40px;
+  padding: 0 var(--space-4);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-xl);
+  font-size: var(--font-size-sidebar);
+  color: var(--color-text-dark);
+  transition: all var(--transition-fast);
+}
+
+.chat__input-field:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.chat__send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(255, 176, 103, 0.3);
+}
+
+.chat__send-btn:hover {
+  background: var(--color-accent-hover);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(255, 176, 103, 0.4);
+}
+
+.chat__send-btn:active {
+  transform: scale(0.92);
+}
+
+.chat__send-btn .icon {
+  width: 16px;
+  height: 16px;
+  stroke: white;
+  stroke-width: 2.5;
+}
